@@ -17,8 +17,8 @@ public class MainUI : MonoBehaviour
 
     [SerializeField] public static bool gameOver;
 
-    [SerializeField] protected private float waveNumber { get; private set; }
-    [SerializeField] protected private string namePlayer { get; private set; }
+    [SerializeField] protected private float waveNumber { get; private set; }// ENCAPSULATION
+    [SerializeField] protected private string namePlayer { get; private set; }// ENCAPSULATION
 
     protected private void Awake()
     {
@@ -30,7 +30,7 @@ public class MainUI : MonoBehaviour
         WaveNumber();
     }
 
-    private void WaveNumber()
+    private void WaveNumber()//// POLYMORPHISM// ABSTRACTION
     {
         waveNumber = SpawnEnemys.waveNumber;
         onlineWaveNumber.text = namePlayer + " Wave: " + waveNumber;
@@ -56,26 +56,26 @@ public class MainUI : MonoBehaviour
         sliderEffects.value = MainManager.Instance.VolumeEffects;
     }
 
-    public void Pause()
+    public void Pause()// ABSTRACTION
     {
         Time.timeScale = 0;
         pauseCanvas.gameObject.SetActive(true);
         pauseButton.gameObject.SetActive(false);
     }
 
-    public void UnPause()
+    public void UnPause()// ABSTRACTION
     {
         Time.timeScale = 1;
         pauseCanvas.gameObject.SetActive(false);
         pauseButton.gameObject.SetActive(true);
     }
 
-    public void BackToMenu()
+    public void BackToMenu()// ABSTRACTION
     {
         SceneManager.LoadScene(0);
     }
 
-    private void GameOver()
+    private void GameOver()// ABSTRACTION
     {
         nameAndScore.text = namePlayer + "  Wave:" + waveNumber;
         pauseButton.gameObject.SetActive(false);
@@ -83,11 +83,11 @@ public class MainUI : MonoBehaviour
         SaveNameAndScore();
     }
 
-    public void Restart()
+    public void Restart()// POLYMORPHISM
     {
         gameOver = false;
         gameOverCanvas.gameObject.SetActive(false);
-        SpawnEnemys.waveNumber = 1;
+        SpawnEnemys.waveNumber = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

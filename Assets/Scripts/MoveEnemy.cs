@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class MoveEnemy : EnemyHP
+public abstract class MoveEnemy : EnemyHP//// INHERITANCE
 {
     
 
@@ -14,17 +14,17 @@ public abstract class MoveEnemy : EnemyHP
     protected private float timePlay = 0.8f;
     protected private float speed;
 
-    [SerializeField] static float boundX { get; } = -7.5f;
-    [SerializeField] static float boundZ { get; } = 5.99f;
-    [SerializeField] static float spawnZ { get; } = 6.17f;
-    [SerializeField] static float spawnTopZ { get; } = 8.35f;
-    [SerializeField] static float topBoundZ { get; } = 7.99f;
-    [SerializeField] static float midBoundZ { get; } = 6.01f;
-    [SerializeField] static float midBoundZz { get; } = 7.01f;
-    [SerializeField] static float midBoundZzz { get; } = 6.99f;
-    [SerializeField] static float spawnTopZz { get; } = 7.25f;
+    [SerializeField] static float boundX { get; } = -7.5f;// ENCAPSULATION
+    [SerializeField] static float boundZ { get; } = 5.99f;// ENCAPSULATION
+    [SerializeField] static float spawnZ { get; } = 6.17f;// ENCAPSULATION
+    [SerializeField] static float spawnTopZ { get; } = 8.35f;// ENCAPSULATION
+    [SerializeField] static float topBoundZ { get; } = 7.99f;// ENCAPSULATION
+    [SerializeField] static float midBoundZ { get; } = 6.01f;// ENCAPSULATION
+    [SerializeField] static float midBoundZz { get; } = 7.01f;// ENCAPSULATION
+    [SerializeField] static float midBoundZzz { get; } = 6.99f;// ENCAPSULATION
+    [SerializeField] static float spawnTopZz { get; } = 7.25f;// ENCAPSULATION
 
-    void Start()
+    void Start()// ABSTRACTION
     {
         timeWait = Random.Range(maxTimeWait / 2, maxTimeWait);
     }

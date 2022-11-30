@@ -18,7 +18,7 @@ public class MenuUI : MonoBehaviour
     [SerializeField] protected private Slider sliderEffects;
     [SerializeField] protected private TextMeshProUGUI topPlayerText;
 
-    private void Start()
+    private void Start()// ABSTRACTION
     {
         LoadNameAndScore();
     }
@@ -39,30 +39,30 @@ public class MenuUI : MonoBehaviour
         topPlayerText.text = MainManager.Instance.PlayerName +": " + MainManager.Instance.Wave + " waves";
     }
 
-    public void GoToRecord()
+    public void GoToRecord()// ABSTRACTION
     {
         canvas.gameObject.SetActive(false);
         canvasRecord.gameObject.SetActive(true);
     }
 
-    public void RecordBackToMenu()
+    public void RecordBackToMenu()// ABSTRACTION
     {
         canvasRecord.gameObject.SetActive(false);
         canvas.gameObject.SetActive(true);
     }
 
-    public void GoToOptions()
+    public void GoToOptions()// ABSTRACTION
     {
         canvas.gameObject.SetActive(false);
         canvasOptions.gameObject.SetActive(true);
     }
-    public void BackToMenu()
+    public void BackToMenu()// ABSTRACTION
     {
         SaveName();
         canvasOptions.gameObject.SetActive(false);
         canvas.gameObject.SetActive(true);
     }
-    public void StartNew()
+    public void StartNew()// ABSTRACTION
     {
         SceneManager.LoadScene(1);
     }

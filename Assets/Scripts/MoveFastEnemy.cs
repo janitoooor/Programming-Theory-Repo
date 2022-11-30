@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveFastEnemy : MoveEnemy
+public class MoveFastEnemy : MoveEnemy//INHERITANCE
 {
     protected float speedF = 1f;
     protected private void Awake()

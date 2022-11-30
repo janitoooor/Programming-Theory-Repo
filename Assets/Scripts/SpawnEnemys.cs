@@ -7,20 +7,19 @@ public class SpawnEnemys : MonoBehaviour
     [SerializeField] protected GameObject[] powerUpPrefabs;
     [SerializeField] protected GameObject[] enemyPrefab;
 
-    [SerializeField] protected private int posX { get; private set; } = 7;
-    [SerializeField] protected private int maxPosZ { get; private set; } = 9;
-    [SerializeField] protected private int minPosZ { get; private set; } = 5;
-    [SerializeField] protected private float posY { get; private set; } = 0.2f;
+    [SerializeField] protected private int posX { get; private set; } = 7;// ENCAPSULATION
+    [SerializeField] protected private int maxPosZ { get; private set; } = 9;// ENCAPSULATION
+    [SerializeField] protected private int minPosZ { get; private set; } = 5;// ENCAPSULATION
+    [SerializeField] protected private float posY { get; private set; } = 0.2f;// ENCAPSULATION
 
-    [SerializeField] public static int waveNumber = 1;
-    [SerializeField] protected private int enemyCount { get; private set; }
+    [SerializeField] public static int waveNumber = 0;// ENCAPSULATION
+    [SerializeField] protected private int enemyCount { get; private set; }// ENCAPSULATION
 
     protected private void Update()
     {
-        StartWaves();
+        StartWaves();// ABSTRACTION
     }
-
-    protected private void StartWaves()
+    protected private void StartWaves()// POLYMORPHISM
     {
         enemyCount = FindObjectsOfType<MoveEnemy>().Length;
         if (enemyCount == 0 && MainUI.gameOver != true)
@@ -52,7 +51,7 @@ public class SpawnEnemys : MonoBehaviour
         return spawnPos;
     }
 
-    protected private void SpawnPowerUp()
+    protected private void SpawnPowerUp()// ABSTRACTION
     {
         int randomPowerUp = Random.Range(0, powerUpPrefabs.Length);
         if(MainUI.gameOver != true)

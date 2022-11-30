@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveEnemyBig : MoveEnemy
+public class MoveEnemyBig : MoveEnemy////INHERITANCE
 {
     protected float speedB = 0.45f;
 
