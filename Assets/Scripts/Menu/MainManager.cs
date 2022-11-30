@@ -9,6 +9,10 @@ public class MainManager : MonoBehaviour
 
     public string PlayerName;
 
+    public float Wave;
+    public float VolumeMusic;
+    public float VolumeEffects;
+
     private void Awake()
     {
         if (Instance != null)
@@ -27,12 +31,19 @@ public class MainManager : MonoBehaviour
     class SaveData
     {
         public string PlayerName;
+        public float Wave;
+        public float VolumeMusic;
+        public float VolumeEffects;
     }
 
     public void SaveNameAndScore()
     {
         SaveData data = new SaveData();
+
         data.PlayerName = PlayerName;
+        data.Wave = Wave;
+        data.VolumeMusic = VolumeMusic;
+        data.VolumeEffects = VolumeEffects;
 
         string json = JsonUtility.ToJson(data);
 
@@ -50,6 +61,9 @@ public class MainManager : MonoBehaviour
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
             PlayerName = data.PlayerName;
+            Wave = data.Wave;
+            VolumeMusic = data.VolumeMusic;
+            VolumeEffects = data.VolumeEffects;
         }
     }
 

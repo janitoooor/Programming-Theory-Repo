@@ -10,14 +10,15 @@ public class ChkenMove : MonoBehaviour
     [SerializeField] Transform startPoint;
     private Animator chickenAnimator;
 
-    void Start()
+    void Awake()
     {
-        chickenAnimator = GetComponent<Animator>();
         StartCoroutine(PlayIntro());
     }
 
     IEnumerator PlayIntro()
     {
+        chickenAnimator = GetComponent<Animator>();
+
         Vector3 startPos = transform.position;
         Vector3 endPos = startPoint.position;
 
@@ -27,6 +28,7 @@ public class ChkenMove : MonoBehaviour
         float distanceCovered = (Time.time - startTime) * walkSpeed;
         float fractionJourney = distanceCovered / journeyLength;
 
+        chickenAnimator.SetBool("Run", false);
         chickenAnimator.SetBool("Walk", true);
 
         while (fractionJourney < 1)

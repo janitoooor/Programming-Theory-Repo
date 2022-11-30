@@ -2,31 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovePowerUp : MonoBehaviour
+public abstract class MovePowerUp : MonoBehaviour
 {
-    public float speed = 4.0f;
-    private float boundX = -7.5f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] protected private float speed;
+    [SerializeField] protected private float boundX { get; private set; } = -7.5f;
+    [SerializeField] protected AudioSource soundDie;
+    [SerializeField] protected ParticleSystem particleDie;
 
-    // Update is called once per frame
-    void Update()
+    public virtual void MoveLeft()
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
-        if(transform.position.x < boundX)
+        if (transform.position.x < boundX)
         {
             Destroy(gameObject);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("Door"))
+        if (other.gameObject.CompareTag("Door"))
         {
-            Destroy(gameObject);
+            soundDie.Play();
+            particleDie.Play();
+            Destroy(gameObject,0.1f);
+        }
+        else if (other.gameObject.CompareTag("Player"))
+        {
+            soundDie.Play();
+            particleDie.Play();
+            Destroy(gameObject, 0.1f);
         }
     }
+
+    protected abstract void MovePowerUpLeft();
 }

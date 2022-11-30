@@ -2,57 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveEnemy : MonoBehaviour
+public abstract class MoveEnemy : EnemyHP
 {
-    public float speed;
+    
 
-    private Rigidbody enemy;
-    private GameManager gameManager;
+    [SerializeField] protected private AudioSource effectSound;
+    [SerializeField] protected private ParticleSystem particles;
 
-    private float boundX = -7.5f;
-    private float boundZ = 5.99f;
-    private float spawnZ = 6.17f;
-    private float spawnTopZ = 8.35f;
-    private float topBoundZ = 7.99f;
-    private float midBoundZ = 6.01f;
-    private float midBoundZz = 7.01f;
-    private float midBoundZzz = 6.99f;
-    private float spawnTopZz = 7.25f;
+    protected private float maxTimeWait = 4;
+    [SerializeField] protected private float timeWait { get; private set; }
+    protected private float timePlay = 0.8f;
+    protected private float speed;
+
+    [SerializeField] static float boundX { get; } = -7.5f;
+    [SerializeField] static float boundZ { get; } = 5.99f;
+    [SerializeField] static float spawnZ { get; } = 6.17f;
+    [SerializeField] static float spawnTopZ { get; } = 8.35f;
+    [SerializeField] static float topBoundZ { get; } = 7.99f;
+    [SerializeField] static float midBoundZ { get; } = 6.01f;
+    [SerializeField] static float midBoundZz { get; } = 7.01f;
+    [SerializeField] static float midBoundZzz { get; } = 6.99f;
+    [SerializeField] static float spawnTopZz { get; } = 7.25f;
 
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        enemy = GetComponent<Rigidbody>();
+        timeWait = Random.Range(maxTimeWait / 2, maxTimeWait);
     }
 
-    void LateUpdate()
+    protected override void HpEnemy()
     {
-        TransformPos();
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("Door"))
         {
-            Destroy(other.gameObject);
-            Destroy(gameObject);
-            Debug.Log("The door is broken!");
+            Destroy(other.gameObject,1.2f);
+            base.AttackAndDie();
         }
         if(other.gameObject.CompareTag("Player"))
         {
-            Destroy(other.gameObject);
-            gameManager.gameOver = true;
+            base.AttackAndDie();
+            base.GameOver();
+            Destroy(other.gameObject,1.2f);
         }
     }
 
-    void TransformPos()
+    public virtual void TransformPos()
     {
-        transform.Translate(Vector3.left * speed * Time.deltaTime);
+        if (!isDie)
+        {
+            if (!isAttack)
+            {
+                transform.Translate(Vector3.left * speed * Time.deltaTime);
+            }
+        }
 
         if (transform.position.x < boundX)
         {
+            MainUI.gameOver = true;
             Destroy(gameObject);
-            gameManager.gameOver = true;
         }
 
         if (transform.position.z > boundZ && transform.position.z < midBoundZ)
@@ -70,4 +80,6 @@ public class MoveEnemy : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, spawnTopZz);
         }
     }
+
+    protected abstract void MoveEnemyLeft();
 }

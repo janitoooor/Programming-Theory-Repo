@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class MoveGuns : MonoBehaviour
 {
-    public float speed = 50;
-    private float boundX = 5.5f;
-    private float rotateSpeed = 400;
+    [SerializeField] protected private float speed { get; private set; } = 6;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    [SerializeField] protected private float timeToDestroy { get; private set; } = 0.04f;
+    [SerializeField] protected private float boundX { get; private set; } = 5.2f;
+    [SerializeField] protected private float rotateSpeed { get; private set; } = 250;
 
-    }
+    [SerializeField] private AudioSource soundHit;
 
     // Update is called once per frame
-    void Update()
+    protected private void Update()
     {
         TransformPos();
     }
 
-    private void TransformPos()
+    protected private void TransformPos()
     {
         transform.Translate(Vector3.up * -speed * Time.deltaTime);
         transform.Rotate(Vector3.up * rotateSpeed * Time.deltaTime);
@@ -31,11 +29,12 @@ public class MoveGuns : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other) 
+    protected private void OnTriggerEnter(Collider other) 
     {
         if(other.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            soundHit.Play();
+            Destroy(gameObject, timeToDestroy);
             other.GetComponent<EnemyHP>().KillEnemy(1);
         }
     }

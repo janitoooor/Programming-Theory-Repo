@@ -4,40 +4,36 @@ using UnityEngine;
 
 public class SpawnEnemys : MonoBehaviour
 {
-    public GameObject[] powerUpPrefabs;
-    public GameObject[] enemyPrefab;
-    private GameManager gameManager;
+    [SerializeField] protected GameObject[] powerUpPrefabs;
+    [SerializeField] protected GameObject[] enemyPrefab;
 
-    private int posX = 6;
-    private int maxPosZ = 9;
-    private int minPosZ = 5;
-    private float posY = 0.2f;
+    [SerializeField] protected private int posX { get; private set; } = 7;
+    [SerializeField] protected private int maxPosZ { get; private set; } = 9;
+    [SerializeField] protected private int minPosZ { get; private set; } = 5;
+    [SerializeField] protected private float posY { get; private set; } = 0.2f;
 
-    public int waveNumber = 1;
-    public int enemyCount;
+    [SerializeField] public static int waveNumber = 1;
+    [SerializeField] protected private int enemyCount { get; private set; }
 
-    void Start()
+    protected private void Update()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        RandomSpawnEnemyWave(waveNumber);
-        SpawnPowerUp();
+        StartWaves();
     }
 
-    void Update()
+    protected private void StartWaves()
     {
         enemyCount = FindObjectsOfType<MoveEnemy>().Length;
-        if(enemyCount == 0 && gameManager.gameOver != true)
+        if (enemyCount == 0 && MainUI.gameOver != true)
         {
             waveNumber++;
             RandomSpawnEnemyWave(waveNumber);
             SpawnPowerUp();
         }
-
     }
 
-    private void RandomSpawnEnemyWave(int enemiesToSpawn)
+    protected private void RandomSpawnEnemyWave(int enemiesToSpawn)
     {
-        if (gameManager.gameOver != true)
+        if (MainUI.gameOver != true)
         {
             for (int i = 0; i < enemiesToSpawn; i++)
             {
@@ -49,20 +45,19 @@ public class SpawnEnemys : MonoBehaviour
         }
     }
 
-    private Vector3 GenerateSpawnPos()
+    protected private Vector3 GenerateSpawnPos()
     {
         int randomPosZ = Random.Range(minPosZ, maxPosZ);
         Vector3 spawnPos = new Vector3(posX, posY, randomPosZ);
         return spawnPos;
     }
 
-    private void SpawnPowerUp()
+    protected private void SpawnPowerUp()
     {
         int randomPowerUp = Random.Range(0, powerUpPrefabs.Length);
-        if(gameManager.gameOver != true)
+        if(MainUI.gameOver != true)
         {
             Instantiate(powerUpPrefabs[randomPowerUp], GenerateSpawnPos(), powerUpPrefabs[randomPowerUp].transform.rotation);
         }
     }
-    
 }
