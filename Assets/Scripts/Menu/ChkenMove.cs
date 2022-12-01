@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class ChkenMove : MonoBehaviour
 {
-    [SerializeField] float walkSpeed;
-    private float timeToEat = 4;
-    private float timeToWait = 3;
-    [SerializeField] Transform startPoint;
-    private Animator chickenAnimator;
+    [SerializeField] protected private float walkSpeed { get; private set; } = 1;
+    [SerializeField] protected private float timeToEat { get; private set; } = 4;
 
-    void Awake()
+    [SerializeField] protected private float timeToWait { get; private set; } = 3;
+
+    [SerializeField] protected private Transform startPoint;
+
+    [SerializeField] protected private ParticleSystem particles;
+
+    [SerializeField] protected private AudioSource soundChick;
+    [SerializeField] protected private Animator chickenAnimator { get; private set; }
+
+    private protected void Awake()
     {
         StartCoroutine(PlayIntro());
     }
@@ -40,13 +46,15 @@ public class ChkenMove : MonoBehaviour
         }
 
         chickenAnimator.SetBool("Walk", false);
-        chickenAnimator.SetBool("Eat", true);
-        StartCoroutine(HeadUp());
+        chickenAnimator.SetBool("Turn_Head", true);
+        StartCoroutine(EatNow());
     }
 
     IEnumerator HeadUp()
     {
-        yield return new WaitForSeconds(timeToEat);
+        float timeEat = Random.Range(timeToEat--, timeToEat++);
+
+        yield return new WaitForSeconds(timeEat);
         chickenAnimator.SetBool("Eat", false);
         chickenAnimator.SetBool("Turn_Head", true);
         StartCoroutine(EatNow());
@@ -54,10 +62,18 @@ public class ChkenMove : MonoBehaviour
 
     IEnumerator EatNow()
     {
-        yield return new WaitForSeconds(timeToWait);
+        float timeWait = Random.Range(timeToWait--, timeToWait++);
+
+        yield return new WaitForSeconds(timeWait);
         chickenAnimator.SetBool("Turn_Head", false);
         chickenAnimator.SetBool("Eat", true);
         StartCoroutine(HeadUp());
-    }    
+    }
 
+    private protected void OnMouseDown()
+    {
+        Instantiate(particles, transform.position, particles.transform.rotation);
+        soundChick.Play();
+        Destroy(gameObject);
+    }
 }

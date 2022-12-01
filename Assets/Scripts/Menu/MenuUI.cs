@@ -62,7 +62,7 @@ public class MenuUI : MonoBehaviour
         canvasOptions.gameObject.SetActive(false);
         canvas.gameObject.SetActive(true);
     }
-    public void StartNew()// ABSTRACTION
+    public void StartNew()// ABSTRACTION    
     {
         SceneManager.LoadScene(1);
     }

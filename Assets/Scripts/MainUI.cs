@@ -72,6 +72,7 @@ public class MainUI : MonoBehaviour
 
     public void BackToMenu()// ABSTRACTION
     {
+        SaveNameAndScore();
         SceneManager.LoadScene(0);
     }
 
