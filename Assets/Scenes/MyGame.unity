@@ -2082,6 +2082,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!95 &476670033 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2058080641350988695, guid: 6f9b7e4a643fc424fa524e72ea501d62, type: 3}
+  m_PrefabInstance: {fileID: 5973723392317259395}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &488650340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7226,6 +7231,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2058080641350988695, guid: 6f9b7e4a643fc424fa524e72ea501d62, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 9cbb2a4d135c31e4cbeadac255ba4ecb, type: 3}
+    - target: {fileID: 5973723390838359780, guid: 6f9b7e4a643fc424fa524e72ea501d62, type: 3}
+      propertyPath: m_Animator
+      value: 
+      objectReference: {fileID: 476670033}
     - target: {fileID: 5973723390838359781, guid: 6f9b7e4a643fc424fa524e72ea501d62, type: 3}
       propertyPath: m_Name
       value: Player

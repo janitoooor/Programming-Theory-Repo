@@ -45,7 +45,7 @@ public abstract class MoveEnemy : EnemyHP//// INHERITANCE
         {
             base.AttackAndDie();
             base.GameOver();
-            Destroy(other.gameObject,1.2f);
+            PlayerController.IsDie = true;
         }
     }
 
@@ -61,6 +61,7 @@ public abstract class MoveEnemy : EnemyHP//// INHERITANCE
 
         if (transform.position.x < boundX)
         {
+            PlayerController.IsDie = true;
             MainUI.gameOver = true;
             Destroy(gameObject);
         }

@@ -9,7 +9,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected private ParticleSystem particlePowerUp;
 
     [SerializeField] protected private AudioSource audioGun;
-    [SerializeField] protected private float speed { get; private set; } = 10.0f;
+
+    [SerializeField] protected private Animator m_Animator;
+    [SerializeField] protected private float speed { get; private set; } = 2.5f;
     [SerializeField] protected private float boundZ { get; private set; } = 4.8f;
     [SerializeField] protected private float boundZz { get; private set; } = 8.6f;
     [SerializeField] protected private Vector3 offset { get; private set; } = new Vector3(0.1f, 0.5f , 0);
@@ -18,16 +20,24 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected private Vector3 offsetBbot { get; private set; } = new Vector3(0.1f, 0.5f, 0.5f);
     [SerializeField] protected private Vector3 offsetBott { get; private set; } = new Vector3(0.1f, 0.5f, -0.5f);
 
-    [SerializeField] protected private float spamDelay { get; private set; } = 0.5f;
+    [SerializeField] protected private float spamDelay { get; private set; } = 0.8f;
     [SerializeField] protected private float chekTime { get; private set; } = 0.0f;
     [SerializeField] protected private float timePowerUp { get; private set; } = 6;
 
     [SerializeField] protected private bool hasPowerUp { get; private set; }
 
+    static public bool IsDie { get; set; }
     protected private void Update()
     {
-        SpawnGuns();
-        TransformPos();
+        if(!IsDie)
+        {
+            SpawnGuns();
+            TransformPos();
+        }
+        else 
+        {
+            m_Animator.SetTrigger("Die");
+        }
     }
 
     protected private void OnTriggerEnter(Collider other)
@@ -37,6 +47,7 @@ public class PlayerController : MonoBehaviour
             hasPowerUp = true;
             particlePowerUp.Play();
             StartCoroutine(PowerCountdownRoutine());
+            m_Animator.SetTrigger("Buff 0");
         }
     }
 
@@ -45,7 +56,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(timePowerUp);
         hasPowerUp = false;
         particlePowerUp.Stop();
-        spamDelay = 0.5f;
     }
 
     protected private void SpawnGuns()
@@ -62,14 +72,19 @@ public class PlayerController : MonoBehaviour
                 Instantiate(gunPrefab, spawnPos, gunPrefab.transform.rotation);
                 chekTime = 0.0f;
                 audioGun.Play();
+                m_Animator.SetBool("Attack", true);
             }
             else if(chekTime >= spamDelay && hasPowerUp == true)
             {
-                spamDelay = 0.2f;
                 chekTime = 0.0f;
                 SpawnProjectile();
                 audioGun.Play();
+                m_Animator.SetBool("Attack", true);
             }
+        }
+        else
+        {
+            m_Animator.SetBool("Attack", false);
         }
     }
 
@@ -88,7 +103,6 @@ public class PlayerController : MonoBehaviour
         Instantiate(gunPrefab, spawnPpposs, gunPrefab.transform.rotation);
     }
 
-
     protected private void TransformPos()
     {
 
@@ -96,6 +110,7 @@ public class PlayerController : MonoBehaviour
         {
             float verticalInput = Input.GetAxis("Vertical");
             transform.Translate(Vector3.forward * verticalInput * speed * Time.deltaTime);
+            m_Animator.SetFloat("Look Y", verticalInput); ;
         }
 
         if (transform.position.z < boundZ)
@@ -107,5 +122,4 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, transform.position.y, boundZz);
         }
     }
-
 }
